@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import SignupModal from "@/components/SignupModal";
 import { Button } from "@/components/ui/button";
@@ -28,6 +29,7 @@ import testimonial3 from "@/assets/testimonial-3.jpg";
 
 const Index = () => {
   const [isSignupOpen, setIsSignupOpen] = useState(false);
+  const navigate = useNavigate();
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -164,7 +166,7 @@ const Index = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in">
             <Button
-              onClick={() => setIsSignupOpen(true)}
+              onClick={() => navigate("/demo")}
               size="lg"
               className="bg-accent text-accent-foreground hover:bg-accent/90 font-bold text-lg px-8 py-6 shadow-xl hover:scale-105 transition-transform"
             >
