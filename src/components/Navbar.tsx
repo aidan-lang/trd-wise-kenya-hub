@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface NavbarProps {
-  onSignupClick: () => void;
+  onSignupClick?: () => void;
 }
 
 const Navbar = ({ onSignupClick }: NavbarProps) => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -18,22 +21,35 @@ const Navbar = ({ onSignupClick }: NavbarProps) => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-      setIsMobileMenuOpen(false);
+  const handleNavigation = (path: string) => {
+    if (path.startsWith("#")) {
+      // Handle scroll to section on home page
+      if (location.pathname !== "/") {
+        navigate("/");
+        setTimeout(() => {
+          const element = document.getElementById(path.substring(1));
+          if (element) {
+            element.scrollIntoView({ behavior: "smooth" });
+          }
+        }, 100);
+      } else {
+        const element = document.getElementById(path.substring(1));
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+        }
+      }
+    } else {
+      navigate(path);
     }
+    setIsMobileMenuOpen(false);
   };
 
   const navLinks = [
-    { label: "Home", id: "hero" },
-    { label: "Mission", id: "mission" },
-    { label: "How It Works", id: "process" },
-    { label: "Courses", id: "courses" },
-    { label: "Success Stories", id: "testimonials" },
-    { label: "FAQ", id: "faq" },
-    { label: "Contact", id: "contact" },
+    { label: "Home", path: "/" },
+    { label: "Pricing", path: "/pricing" },
+    { label: "Education", path: "/education" },
+    { label: "Free Demo", path: "/demo" },
+    { label: "Contact", path: "/contact" },
   ];
 
   return (
@@ -48,7 +64,7 @@ const Navbar = ({ onSignupClick }: NavbarProps) => {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <button
-            onClick={() => scrollToSection("hero")}
+            onClick={() => handleNavigation("/")}
             className="text-2xl font-bold text-primary hover:text-accent transition-colors"
           >
             TRD-Wise
@@ -58,15 +74,19 @@ const Navbar = ({ onSignupClick }: NavbarProps) => {
           <div className="hidden lg:flex items-center gap-8">
             {navLinks.map((link) => (
               <button
-                key={link.id}
-                onClick={() => scrollToSection(link.id)}
-                className="text-sm font-medium text-foreground hover:text-accent transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-accent after:scale-x-0 after:origin-right after:transition-transform hover:after:scale-x-100 hover:after:origin-left"
+                key={link.path}
+                onClick={() => handleNavigation(link.path)}
+                className={`text-sm font-medium transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-accent after:scale-x-0 after:origin-right after:transition-transform hover:after:scale-x-100 hover:after:origin-left ${
+                  location.pathname === link.path
+                    ? "text-accent font-semibold"
+                    : "text-foreground hover:text-accent"
+                }`}
               >
                 {link.label}
               </button>
             ))}
             <Button
-              onClick={onSignupClick}
+              onClick={() => onSignupClick ? onSignupClick() : handleNavigation("/demo")}
               className="bg-accent text-accent-foreground hover:bg-accent/90 font-semibold shadow-lg"
             >
               Get Started
@@ -88,9 +108,13 @@ const Navbar = ({ onSignupClick }: NavbarProps) => {
             <div className="flex flex-col gap-4">
               {navLinks.map((link) => (
                 <button
-                  key={link.id}
-                  onClick={() => scrollToSection(link.id)}
-                  className="text-left py-2 text-sm font-medium text-foreground hover:text-accent transition-colors"
+                  key={link.path}
+                  onClick={() => handleNavigation(link.path)}
+                  className={`text-left py-2 text-sm font-medium transition-colors ${
+                    location.pathname === link.path
+                      ? "text-accent font-semibold"
+                      : "text-foreground hover:text-accent"
+                  }`}
                 >
                   {link.label}
                 </button>
@@ -98,7 +122,7 @@ const Navbar = ({ onSignupClick }: NavbarProps) => {
               <Button
                 onClick={() => {
                   setIsMobileMenuOpen(false);
-                  onSignupClick();
+                  onSignupClick ? onSignupClick() : handleNavigation("/demo");
                 }}
                 className="bg-accent text-accent-foreground hover:bg-accent/90 font-semibold"
               >
