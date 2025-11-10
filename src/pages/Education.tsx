@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -6,6 +7,8 @@ import { BookOpen, TrendingUp, Shield, Brain, Target, LineChart } from "lucide-r
 import { toast } from "@/hooks/use-toast";
 
 const Education = () => {
+  const [selectedCategory, setSelectedCategory] = useState("All");
+
   const categories = [
     { name: "All", count: 6 },
     { name: "Beginner Trading", count: 2 },
@@ -85,6 +88,11 @@ const Education = () => {
     }
   };
 
+  // Filter materials based on selected category
+  const filteredMaterials = selectedCategory === "All" 
+    ? educationalMaterials 
+    : educationalMaterials.filter(material => material.category === selectedCategory);
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
@@ -106,7 +114,8 @@ const Education = () => {
             {categories.map((category) => (
               <Button
                 key={category.name}
-                variant={category.name === "All" ? "default" : "outline"}
+                onClick={() => setSelectedCategory(category.name)}
+                variant={category.name === selectedCategory ? "default" : "outline"}
                 className="gap-2"
               >
                 {category.name}
@@ -123,7 +132,7 @@ const Education = () => {
       <section className="py-16 px-4">
         <div className="container mx-auto">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-            {educationalMaterials.map((material, index) => (
+            {filteredMaterials.map((material, index) => (
               <Card 
                 key={index}
                 className="flex flex-col hover:shadow-xl transition-all duration-300 hover:scale-105"
