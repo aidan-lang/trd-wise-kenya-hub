@@ -85,12 +85,6 @@ const Navbar = ({ onSignupClick }: NavbarProps) => {
                 {link.label}
               </button>
             ))}
-            <Button
-              onClick={() => onSignupClick ? onSignupClick() : handleNavigation("/demo")}
-              className="bg-accent text-accent-foreground hover:bg-accent/90 font-semibold shadow-lg"
-            >
-              Get Started
-            </Button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -119,15 +113,6 @@ const Navbar = ({ onSignupClick }: NavbarProps) => {
                   {link.label}
                 </button>
               ))}
-              <Button
-                onClick={() => {
-                  setIsMobileMenuOpen(false);
-                  onSignupClick ? onSignupClick() : handleNavigation("/demo");
-                }}
-                className="bg-accent text-accent-foreground hover:bg-accent/90 font-semibold"
-              >
-                Get Started
-              </Button>
             </div>
           </div>
         )}
