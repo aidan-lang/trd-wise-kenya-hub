@@ -51,7 +51,7 @@ const Demo = () => {
       {/* Hero Section */}
       <section className="pt-32 pb-16 px-4 bg-gradient-to-b from-primary/5 to-background">
         <div className="container mx-auto text-center">
-          <h1 className="hero-text mb-6">Try TRD-Wise Risk-Free</h1>
+          <h1 className="hero-text mb-6">Try TRD-Wise</h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Experience our platform, access demo funds, and start learning without commitment.
           </p>
@@ -122,7 +122,7 @@ const Demo = () => {
                     />
                   </div>
 
-                  <div>
+                  {/*<div>
                     <Label htmlFor="accountType">Account Type Preference</Label>
                     <Select
                       value={formData.accountType}
@@ -139,7 +139,7 @@ const Demo = () => {
                         <SelectItem value="beginner">Beginner – Not Sure Yet</SelectItem>
                       </SelectContent>
                     </Select>
-                  </div>
+                  </div>*/}
 
                   <Button type="submit" className="w-full" size="lg">
                     Sign Up for Demo

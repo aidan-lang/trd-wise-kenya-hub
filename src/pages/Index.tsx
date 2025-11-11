@@ -161,7 +161,7 @@ const Index = () => {
             Unlock Trading Opportunities in Kenya
           </h1>
           <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto text-white/90 animate-fade-in">
-            Affordable evaluation. Expert guidance. Real funding. Start building
+            Financial Inclusion. Financial Literacy. Financial Power. Start building
             your wealth today.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in">
